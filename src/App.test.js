@@ -43,16 +43,24 @@ test("renders increment button", () => {
   expect(button.length).toBe(1);
 });
 
+// Challenge 1
+
+test("renders decrement button", () => {
+  const wrapper = setup();
+  const button = findByTestAttr(wrapper, "decrement-button");
+  expect(button.length).toBe(1);
+});
+
 test("render counter display", () => {
   const wrapper = setup();
   const counterDisplay = findByTestAttr(wrapper, "counter-display");
   expect(counterDisplay.length).toBe(1);
 });
 
-test("counter starts at 0", () => {
+test("counter starts at 4", () => {
   const wrapper = setup();
   const initialCounterState = wrapper.state("counter");
-  expect(initialCounterState).toBe(0);
+  expect(initialCounterState).toBe(4);
 });
 
 test("clicking button incrments counter display", () => {
@@ -67,4 +75,15 @@ test("clicking button incrments counter display", () => {
   //find display and test value
   const counterDisplay = findByTestAttr(wrapper, "counter-display");
   expect(counterDisplay.text()).toContain(counter + 1);
+});
+
+test("clicking button decrements counter display", () => {
+  const counter = 7;
+  const wrapper = setup(null, { counter });
+  const button = findByTestAttr(wrapper, "decrement-button");
+  button.simulate("click");
+  wrapper.update();
+
+  const counterDisplay = findByTestAttr(wrapper, "counter-display");
+  expect(counterDisplay.text()).toContain(counter - 1);
 });
